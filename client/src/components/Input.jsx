@@ -22,7 +22,6 @@ const Input = () => {
   };
 
   const sendMessage = () => {
-    console.log("heyy");
     socket.emit("send_message", { message, room });
   };
 
@@ -33,22 +32,35 @@ const Input = () => {
   }, [socket]);
   return (
     <>
-      <div className="p-12">
-        <input placeholder="Room Number..." onChange={handleRoom} />
-        <button onClick={joinRoom}>Join Room</button>
-        <input
-          onChange={handleChange}
-          placeholder="message... "
-          className="outline-none bg-white border-gray-300 border p-2"
-        />
-        <button
-          onClick={sendMessage}
-          className="bg-black text-white p-2 rounded-sm "
-        >
-          Send message
-        </button>
-        <h1>message:</h1>
-        {messageReceived}
+      <div className="p-12 flex flex-col gap-4">
+        <div className="flex items-center gap-2">
+          <input
+            className="outline-none bg-white border-gray-300 border p-2"
+            placeholder="Room Number..."
+            onChange={handleRoom}
+          />
+          <button
+            className="bg-black text-white p-2 rounded-sm "
+            onClick={joinRoom}
+          >
+            Join Room
+          </button>
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            onChange={handleChange}
+            placeholder="message... "
+            className="outline-none bg-white border-gray-300 border p-2"
+          />
+          <button
+            onClick={sendMessage}
+            className="bg-black text-white p-2 rounded-sm "
+          >
+            Send message
+          </button>
+        </div>
+
+        <h1>message: {messageReceived}</h1>
       </div>
     </>
   );
