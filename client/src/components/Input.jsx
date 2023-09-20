@@ -5,6 +5,17 @@ const socket = io.connect("http://localhost:3001");
 const Input = () => {
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
+  const [room, setRoom] = useState("");
+
+  const joinRoom = () => {
+    if (room !== "") {
+      socket.emit("join_room", room);
+    }
+  };
+
+  const handleRoom = (e) => {
+    setRoom(e.target.value);
+  };
 
   const handleChange = (e) => {
     setMessage(e.target.value);
@@ -12,7 +23,7 @@ const Input = () => {
 
   const sendMessage = () => {
     console.log("heyy");
-    socket.emit("send_message", { message });
+    socket.emit("send_message", { message, room });
   };
 
   useEffect(() => {
@@ -23,6 +34,8 @@ const Input = () => {
   return (
     <>
       <div className="p-12">
+        <input placeholder="Room Number..." onChange={handleRoom} />
+        <button onClick={joinRoom}>Join Room</button>
         <input
           onChange={handleChange}
           placeholder="message... "
